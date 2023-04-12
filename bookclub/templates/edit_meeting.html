@@ -1,0 +1,18 @@
+{% extends 'base_content.html' %}
+{% block content %}
+<div class="container">
+  <div class="row">
+
+
+      <div class="col-6 mx-auto" style="background-color: white; border-radius: 10px ;border-style: groove; border-color: brown;">
+          <h2 class="text-left" style="margin-top: 10px"><strong>Edit Meeting Details</strong></h2>
+            <h5 class="text-muted">{{ club.name }}</h5>
+    <form method="post">
+        {% csrf_token %}
+        {% include 'partials/bootstrap_form.html' with form=form %}
+        <input type="submit" value="Finish" class="btn" id="bookwiseGeneralBtn" style="margin-bottom: 10px">
+    </form>
+      </div>
+  </div>
+</div>
+{% endblock %}

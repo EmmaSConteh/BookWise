@@ -1,0 +1,57 @@
+{% extends 'base_content.html' %}
+{% load bootstrap_pagination %}
+{% block content %}
+<div class="container">
+{% if club.get_meetings %}
+    <div class="row">
+        <div class="col">
+            <h2 class="text-left" style="margin-top: 10px"><strong>Meetings Archive</strong></h2>
+            <h5 class="text-muted">{{ club.name }}</h5>
+            <div class="book-table text-center">
+                <table class="table table-hover table-borderless">
+                    <thead>
+                  <tr>
+                      <th></th>
+                      <th scope="col">Date</th>
+                      <th scope="col">Start Time</th>
+                      <th scope="col">Address</th>
+                      <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for meeting in club.get_meetings %}
+                  <tr>
+                    <td><img src="{{ meeting.club.mini_gravatar }}" class="rounded-circle" alt="{{ meeting.club.name }}'s gravatar"></td>
+                    <td>{{ meeting.date }}</td>
+                    <td>{{ meeting.start_time }}</td>
+                    <td><a href=//{{meeting.address}} target="_blank" rel="noopener noreferrer">{{ meeting.address }}</a></td>
+
+                      {% if request.user == club.owner or request.user in club.get_organisers and club.organiser_owner %}
+
+                    <td><a class="btn" href="{% url 'edit_meeting' club.id meeting.id %}" id="bookwiseGeneralBtn" style="text-transform: uppercase; font-size: 14px">Edit meeting details</a></td>
+                      <td><a class="btn" href="{% url 'delete_meeting' club.id meeting.id %}" id="bookwiseGeneralBtn" style="text-transform: uppercase; font-size: 14px">Cancel Meeting</a></td>
+                    {% endif %}
+                  </tr>
+                  {% endfor %}
+                </tbody>
+                  </table>
+                  {% bootstrap_paginate page_obj range=6 previous_label="Previous" next_label="Next" show_first_last="true" %}
+              </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="mt-5" style="text-align: center;">
+         <h5 class="text-muted text-center"><strong>{{ club.name }}</strong> does not have any meetings</h5>
+    </div>
+{% endif %}
+</div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script>
+  jQuery(document).ready(function($) {
+      $(".clickable-row").click(function() {
+          window.location = $(this).data("href");
+      });
+  });
+</script>
+{% endblock %}

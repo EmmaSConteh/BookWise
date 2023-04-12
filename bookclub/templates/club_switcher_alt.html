@@ -1,0 +1,87 @@
+{% extends 'base_content.html' %}
+{% block content %}
+<div class="container" style="padding-bottom: 50px">
+    <div class="row">
+        <div class="col-3">
+            <div class="text">
+                <h3 class="text-left"><strong>My Clubs</strong></h3>
+                <h5 class="text-muted">All Clubs You Belong To</h5>
+
+            </div>
+        </div>
+        <div class="col-6">
+
+        </div>
+        <div class="col-3">
+            <div class="text float-end">
+                <h4>
+                    <a href="{% url 'club_selector' %}"> <i class="bi bi-view-stacked" style="color: cornflowerblue"></i></a>
+                </h4>
+            </div>
+        </div>
+    </div>
+
+
+
+<div class="row row-cols-3">
+    {% for user_club in user_clubs %}
+
+          <div class="col mb-3">
+            <div class="card h-100" id="clubSelectorCard" style="border-color: brown;">
+                <div class="row h-100">
+                    <div class="col text-left">
+                        <img src="{{ user_club.gravatar }}" class="card-img" style="border-radius: 10px; margin: 10px ">
+                    </div>
+                    <div class="col">
+                        <div class="row">
+                            <div class="card-body">
+                            <h5 class="card-title"><strong>{{ user_club.name }}</strong></h5>
+                            <p class="card-text" style="color: dimgray; font-size: 14px">{{ user_club.description|slice:':120' }}...</p>
+                        </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="card-body">
+                            <p class="card-text"> <i class="bi bi-geo-alt"></i> {{ user_club.location }}</p>
+                        <p class="card-text">{% include 'partials/club_meeting_type.html' with club=user_club %}</p>
+                            {% if user in user_club.get_organisers%}
+                                    <p> <i class="bi bi-clipboard"></i><strong> Organiser </strong></p>
+                                      {% endif %}
+                                  {% if user == user_club.get_owner%}
+                                    <p> <i class="bi bi-person-check"></i><strong> Owner </strong></p>
+                                      {% endif %}
+                                  {% if user in user_club.get_members%}
+                                    <p> <i class="bi bi-file-person"></i><strong> Member </strong></p>
+                                      {% endif %}
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card-body">
+                            <div class="row">
+                                <p class="card-text float-end"><i class="bi bi-person-fill"></i> <a href="{% url 'user_profile' user_club.owner.id %}" style="text-decoration: none; color: #B0B0B0; font-size: 14px">{{ user_club.owner.get_full_name }}</a></p>
+
+                            </div>
+                            <br>
+                            <br>
+                            <div class="row mt-auto">
+                                 <a class="btn float-end" href="{% url 'club_profile' user_club.id %}" id="bookwiseGeneralBtn" style="padding: 15px; text-transform:uppercase; font-size: 14px;"><i class="bi bi-search"></i> View</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+          </div>
+
+
+
+
+    {% endfor %}
+</div>
+</div>
+
+{% endblock %}

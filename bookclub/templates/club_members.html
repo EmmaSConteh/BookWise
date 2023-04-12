@@ -1,0 +1,160 @@
+{% extends 'base_content.html' %}
+{% load bootstrap_pagination %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+           <h2 class="text-left fw-bold"><strong>Members</strong></h2>
+            <h5 class="text-left text-muted">{{ club.name }}</h5>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-12">
+
+        <input type='text' id='txt_searchall' class="form-control w-50" placeholder="Search for clubs and applicants.." size="30">&nbsp;
+            <div class="book-table">
+                <table id="myTable" class="table table-hover table-borderless">
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Bio</th>
+                            <th scope="col">Favourite Genre</th>
+                            <th scope="col">User Level</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-left">
+                        {% for member in page_obj %}
+                            {% if member == club.owner %}
+                            <tr class="clickable-row" data-href="{% url 'user_profile' member.id %}" style="background-color: #ffefef">
+                            {% else %}
+                            <tr class="clickable-row" data-href="{% url 'user_profile' member.id %}">
+                            {% endif %}
+                                <td><img src="{{ member.mini_gravatar }}" alt="Gravatar of {{ member.first_name }} {{ member.last_name }}" class="rounded-circle" ></td>
+                                <td>{{member.first_name}} {{member.last_name}}</td>
+                                <td>{{member.public_bio|slice:':240'}}...</td>
+                                <td>{{member.favourite_genre}}</td>
+                                {% if member in club.get_members%}
+                                  <td>Member</td>
+                                  {% if is_owner  %}
+                                    <td><a class="btn btn-outline-success" href="{% url 'promote_member_to_organiser' c_pk=c_pk u_pk=member.id %}">Promote</a></td>
+                                    <td><a class="btn btn-outline-dark" href="{% url 'kick_user_from_club' c_pk=c_pk u_pk=member.id %}">Remove</a></td>
+                                    <td><a class="btn btn-outline-primary" href="{% url 'transfer_ownership' c_pk=c_pk u_pk=member.id %}">Transfer</a></td>
+                                    {%endif%}
+                                    {% elif member in club.get_organisers %}
+                                  <td>Organiser</td>
+                                  {% if is_owner  %}
+                                     <td><a class="btn btn-outline-danger" href="{% url 'demote_organiser_to_member' c_pk=c_pk u_pk=member.id %}">Demote</a></td>
+                                     <td><a class="btn btn-outline-dark" href="{% url 'kick_user_from_club' c_pk=c_pk u_pk=member.id %}">Remove</a></td>
+                                     <td><a class="btn btn-outline-primary" href="{% url 'transfer_ownership' c_pk=c_pk u_pk=member.id %}">Transfer</a></td>
+                                     {%endif%}
+                                     {% else %}
+                                    <td>Owner</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div id="pag">
+                    {% bootstrap_paginate page_obj range=6 previous_label="Previous" next_label="Next" show_first_last="true" %}
+                </div>
+            </div>
+            <div class="book-table">
+                <table id="fullTable" class="table table-hover table-borderless" style="display:none">
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Bio</th>
+                            <th scope="col">Favourite Genre</th>
+                            <th scope="col">User Level</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for member in all_users %}
+                            {% if member == club.owner %}
+                            <tr class="clickable-row" data-href="{% url 'user_profile' member.id %}" style="background-color: #ffefef">
+                            {% else %}
+                            <tr class="clickable-row" data-href="{% url 'user_profile' member.id %}">
+                            {% endif %}
+                                <td><img src="{{ member.mini_gravatar }}" alt="Gravatar of {{ member.first_name }} {{ member.last_name }}" class="rounded-circle" ></td>
+                                <td>{{member.first_name}} {{member.last_name}}</td>
+                                <td>{{member.public_bio|slice:':240'}}...</td>
+                                <td>{{member.favourite_genre}}</td>
+                                {% if member in club.get_members%}
+                                  <td>Member</td>
+                                  {% if is_owner  %}
+                                    <td><a class="btn btn-outline-success" href="{% url 'promote_member_to_organiser' c_pk=c_pk u_pk=member.id %}">Promote</a></td>
+                                    <td><a class="btn btn-outline-dark" href="{% url 'kick_user_from_club' c_pk=c_pk u_pk=member.id %}">Remove</a></td>
+                                    <td><a class="btn btn-outline-primary" href="{% url 'transfer_ownership' c_pk=c_pk u_pk=member.id %}">Transfer</a></td>
+                                    {%endif%}
+                                    {% elif member in club.get_organisers %}
+                                  <td>Organiser</td>
+                                  {% if is_owner  %}
+                                      <td><a class="btn btn-outline-danger" href="{% url 'demote_organiser_to_member' c_pk=c_pk u_pk=member.id %}">Demote</a></td>
+                                     <td><a class="btn btn-outline-dark" href="{% url 'kick_user_from_club' c_pk=c_pk u_pk=member.id %}">Remove</a></td>
+                                     <td><a class="btn btn-outline-primary" href="{% url 'transfer_ownership' c_pk=c_pk u_pk=member.id %}">Transfer</a></td>
+                                     {%endif%}
+                                     {% else %}
+                                  <td>Owner</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script>
+  jQuery(document).ready(function($) {
+      $(".clickable-row").click(function() {
+          window.location = $(this).data("href");
+      });
+  });
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  $('.fullTable').hide();
+  $('#txt_searchall').keyup(function(){
+    var search = $(this).val();
+    $('#fullTable').show();
+    $('#fullTableHeader').hide();
+    $('table tbody tr').hide();
+    var len = $('table tbody tr:not(.notfound) td:contains("'+search+'")').length;
+    if(len > 0){
+      $('table tbody tr:not(.notfound) td:contains("'+search+'")').each(function(){
+        $(this).closest('tr').show();
+        $('#fullTableHeader').show();
+        $('#myTable').hide();
+        $('#pag').hide();
+      });
+    }else{
+      $('.notfound').show();
+    }
+    if(search.length == 0){
+      $('table tbody tr').show();
+      $('#fullTable').hide();
+      $('#myTable').show();
+      $('#pag').show();
+    }
+  });
+});
+$.expr[":"].contains = $.expr.createPseudo(function(arg) {
+   return function( elem ) {
+     return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+   };
+});
+</script>
+{% endblock %}

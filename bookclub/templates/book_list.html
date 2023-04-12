@@ -1,0 +1,64 @@
+{% extends 'base_content.html' %}
+{% load bootstrap_pagination %}
+{% block content %}
+<div class="container">
+  <div class="book-table">
+    <h2 class="text-left"><strong>Browse Books</strong></h2>
+  <h5 class="text-muted">View All Books</h5>
+    <table class="table table-hover table-borderless">
+        <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">Title</th>
+        <th scope="col">Author</th>
+        <th scope="col">Publication Year</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for entry in books %}
+      <tr class="clickable-row" data-href="{% url 'book_profile' entry.id %}">
+        <td><img src="{{ entry.medium_url }}" alt="a"></td>
+        <td>{{ entry.title }}</td>
+        <td>{{ entry.author }}</td>
+        <td>{{ entry.pub_year }}</td>
+
+        {% if entry in request.user.currently_reading_books.all %}
+        <form action="{% url 'remove_from_reading_list_book_list' book_id=entry.id %}" method="post">
+          {% csrf_token %}
+         <td><button type="submit" class="btn" id="bookwiseGeneralBtn" style="font-size: 20px"><i class="bi bi-bookmarks-fill"></i></button></td>
+       </form>
+       {% else %}
+        <form action="{% url 'add_to_reading_list_book_list' book_id=entry.id %}" method="post">
+          {% csrf_token %}
+         <td><button type="submit" class="btn" id="bookwiseGeneralBtn" style="font-size: 20px"><i class="bi bi-bookmarks"></i></button></td>
+       </form>
+        {% endif %}
+
+        {% if entry in request.user.favourite_books.all %}
+        <form action="{% url 'unfavourite_book_list' book_id=entry.id %}" method="post">
+          {% csrf_token %}
+          <td><button type="submit" class="btn" id="bookwiseGeneralBtn" style="font-size: 20px"><i class="bi bi-star-fill"></i></button></td>
+        </form>
+        {% else %}
+         <form action="{% url 'make_favourite_book_list' book_id=entry.id %}" method="post">
+           {% csrf_token %}
+          <td><button type="submit" class="btn" id="bookwiseGeneralBtn" style="font-size: 20px"><i class="bi bi-star"></i></button></td>
+        </form>
+        {% endif %}
+
+      </tr>
+      {% endfor %}
+    </tbody>
+      </table>
+      {% bootstrap_paginate page_obj range=6 previous_label="Previous" next_label="Next" show_first_last="true" %}
+  </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script>
+  jQuery(document).ready(function($) {
+      $(".clickable-row").click(function() {
+          window.location = $(this).data("href");
+      });
+  });
+</script>
+{% endblock %}
