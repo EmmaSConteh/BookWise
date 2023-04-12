@@ -1,0 +1,92 @@
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+      <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="books-dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Browse <i class="bi bi-globe"></i>
+      </a>
+      <ul class="dropdown-menu" aria-labelledby="user-account-dropdown">
+          <li><a class="dropdown-item" href="{% url 'book_list' %}">All Books</a></li>
+
+          <li><a class="dropdown-item" href="{% url 'club_list' %}">All Clubs</a></li>
+          <li><a class="dropdown-item" href="{% url 'user_list' %}">All Users</a></li>
+
+      </ul>
+    </li>
+
+      <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="clubs-dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Manage <i class="bi bi-grid-1x2"></i>
+      </a>
+      <ul class="dropdown-menu dropdown-menu" aria-labelledby="user-account-dropdown">
+       <li><a class="dropdown-item" href="{% url 'new_club' %}">Create Club</a></li>
+       <div class="dropdown-divider"></div>
+        <li><a class="dropdown-item" href="{% url 'club_selector' %}">My Clubs</a></li>
+        <li><a class="dropdown-item" href="{% url 'applications' %}">My Club Applications</a></li>
+        <li><a class="dropdown-item" href="{% url 'favourites' %}">My Favourite Books</a></li>
+        <li><a class="dropdown-item" href="{% url 'reading_list' user.id %}" >My Reading List</a></li>
+        <li><a class="dropdown-item" href="{% url 'my_book_ratings' %}">My Book Ratings</a></li>
+      </ul>
+    </li>
+
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="posts-dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Posts <i class="bi bi-newspaper"></i>
+      </a>
+      <ul class="dropdown-menu dropdown-menu" aria-labelledby="user-posts-dropdown">
+        <li> <a class="dropdown-item" href="{% url 'user_posts' %}">User Posts</a></li>
+        <li> <a class="dropdown-item" href="{% url 'club_posts' %}">Club Posts</a></li>
+      </ul>
+    </li>
+
+    {% if request.user.inbox_count > 0 %}
+    <li class="nav-item"> 
+      <a class="nav-link" href="{% url 'inbox' %}">Inbox <i class="bi bi-inboxes"><span class="badge badge-light">{{ request.user.inbox_count }}</span></i></a>
+    </li>
+    {% else %}
+      <li class="nav-item"> 
+      <a class="nav-link" href="{% url 'inbox' %}">Inbox <i class="bi bi-inboxes"><span class="badge badge-light"></span></i></a>
+    </li>
+    {% endif %}
+    
+
+    
+
+  
+  </ul>
+
+  <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+    <li class="nav-item px-3">
+      <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+      <form class="d-flex justify-content-center" method=POST action="{% url 'search_page' %}">
+      {% csrf_token %}
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="query" id="search">
+      <button class="btn btn-outline-light" type="submit">Search</button>
+      </form>
+      <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+      <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+      <script>
+        $(function () {
+          $( "#search" ).autocomplete({
+            source: "{% url 'search_autocomplete' %}",
+            minLength: 4
+          });
+        });
+      </script>
+    </li>
+    <li class="nav-item dropdown">
+      <a class="nav-link" href="#" id="user-account-dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <img src="{{ request.user.mini_gravatar }}" class="rounded-circle" height="24" width="24" style="border-style: outset"> {{request.user.first_name}} {{request.user.last_name}}
+      </a>
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="user-account-dropdown">
+        <li><a class="dropdown-item" href="{% url 'profile' %}">View profile</a></li>
+        <li><a class="dropdown-item" href="{% url 'my_applications' %}">Track applications</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="{% url 'edit_profile' %}">Edit profile</a></li>
+        <li><a class="dropdown-item" href="{% url 'password' %}">Edit password</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="{% url 'log_out' %}">Log out</a></li>
+      </ul>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,19 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-dark mb-3 sticky-top" style="background-color: rgba(165, 42, 42, 0.97)">
+  <div class="container">
+  <a class="navbar-brand"
+          {% if user.is_authenticated %}
+                href="{% url 'home' %}"
+          {% else %}
+                href="{% url 'landing_page' %}"
+          {% endif %} >
+      <img src="{% static 'images/bookwise.svg' %}" height="32" width="24">ookwise</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    {% if user.is_authenticated %}
+      {% include 'partials/menu.html' %}
+    {% endif %}
+  </div>
+</nav>
