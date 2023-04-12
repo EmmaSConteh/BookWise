@@ -1,0 +1,50 @@
+[
+  {
+    "model": "bookclub.club",
+    "pk": 1,
+    "fields": {
+      "name": "Bush House Book Club",
+      "description": "Bush House Official Book Club!",
+      "location": "Strand, London",
+      "owner": 1,
+      "meeting_online": true,
+      "organiser_owner": false
+    }
+  },
+    {
+    "model": "bookclub.club",
+    "pk": 2,
+    "fields": {
+      "name": "Somerset House Book Club",
+      "description": "Somerset House Official Book Club!",
+      "location": "Strand, London",
+      "owner": 2,
+      "meeting_online": true,
+      "organiser_owner": true
+    }
+  },
+  {
+    "model": "bookclub.club",
+    "pk": 3,
+    "fields": {
+      "name": "Strand House Book Club",
+      "description": "Strand House Official Book Club!",
+      "location": "Strand, London",
+      "owner": 1,
+      "meeting_online": false,
+      "organiser_owner": true
+    }
+  },
+  {
+    "model": "bookclub.club",
+    "pk": 4,
+    "fields": {
+      "name": "Temple Book Club",
+      "description": "Temple House Official Book Club!",
+      "location": "Temple, London",
+      "owner": 2,
+      "meeting_online": true,
+      "organiser_owner": false
+    }
+  }
+]

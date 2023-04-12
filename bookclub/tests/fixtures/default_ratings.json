@@ -1,0 +1,32 @@
+[
+  {
+    "model": "bookclub.rating",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "isbn": "0072295619",
+      "book": 1,
+      "rating": 5
+    }
+  },
+  {
+    "model": "bookclub.rating",
+    "pk": 3,
+    "fields": {
+      "user": 1,
+      "isbn": "0063295619",
+      "book": 2,
+      "rating": 4
+    }
+  },
+    {
+    "model": "bookclub.rating",
+    "pk": 2,
+    "fields": {
+      "user": 2,
+      "isbn": "0062503979",
+      "book": 2,
+      "rating": 10
+    }
+  }
+]
