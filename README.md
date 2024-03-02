@@ -1,6 +1,6 @@
-# Ctrl Intelligence
+# BookWise
 
-Ctrl Intelligence, the major group project for SEG.
+BookWise - Book Cataloging and Recommendation System
 
 ## Bookwise
 
@@ -16,18 +16,17 @@ Use the following details:
 
 The main project is called `system` and it consists of two key applications, `bookclub` being the social-network side of Bookwise and `recommender` dealing with the dataset preprocessing.
 
-## Team Members
+## Co-Authors
 
-- Fathima (JD) Jamal-Deen (K1922032)
-- Emma Conteh (K20045772)
-- Surma Begum (K19025208)
-- Zishan Rahman (K20071291)
-- Raisa Ahmed (K20056465)
-- Zakariya Ahmed Mohamed (K20008985)
-- Lorenzo Bonara (K20068878)
-- Yiğit Cengiz (K20077068)
-- Suhayb Yones (K20044202)
-- Brendon Zoto (K19011443)
+- Fathima (JD) Jamal-Deen
+- Surma Begum 
+- Zishan Rahman 
+- Raisa Ahmed 
+- Zakariya Ahmed Mohamed 
+- Lorenzo Bonara
+- Yiğit Cengiz
+- Suhayb Yones
+- Brendon Zoto
 
 ## Installation Instructions
 
